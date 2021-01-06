@@ -1,49 +1,47 @@
 <?php
-session_start();
+    session_start();
 
-//verificar se tem sessão iniciada
-if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION['email'])){
-	
-	$_SESSION['error'] = array ('source' => 'contato.php','type' => 'No Permissions');
-	header('Location:index.php');
-	die();	
-}else{
-	require_once('dbmanager.php');
-	$myDb = ligarDb();
-	$email = $_SESSION['email'];
-	
-		require_once('checkType.php');
+    //verificar se tem sessão iniciada
+    if (empty($_SESSION) || !array_key_exists('email', $_SESSION) || !isset($_SESSION['email'])) {
 
+        $_SESSION['error'] = array('source' => 'contato.php', 'type' => 'No Permissions');
+        header('Location:index.php');
+        die();
+    } else {
+        require_once 'dbmanager.php';
+        $myDb = ligarDb();
+        $email = $_SESSION['email'];
 
-if (!empty($_POST)){
-		$email=$_POST['email'];
-		$subject=$_POST['subject'];
-		$message=$_POST['message'];
-		
-		$errorsArray = array(
-			'email' => array (false, "Email must have a valid addresss.<br/>"),
-			
-		);
-		
-		require_once('checkForm.php');
-		$flag = false;
-		
-		if (!checkEmail($email)){
-			$errorsArray['email'][0] = true;
-			$flag=true;
-		}
-		
-		
-		if (!$flag){
-			$header = "MIME-Version: \r\n";
-			$header .= "Content-type: text/html; charset=iso-8859-1\r\n";
-			$header .= "From: \"$email\" <$email>\r\n";
-			mail('incole0369@gmail.com', $subject, $message, $header);
-			header('location:ok1.php');
-			die();
-		}
-	}
-}
+        require_once 'checkType.php';
+
+        if (!empty($_POST)) {
+            $email = $_POST['email'];
+            $subject = $_POST['subject'];
+            $message = $_POST['message'];
+
+            $errorsArray = array(
+                'email' => array(false, 'Email must have a valid addresss.<br/>'),
+
+            );
+
+            require_once 'checkForm.php';
+            $flag = false;
+
+            if (!checkEmail($email)) {
+                $errorsArray['email'][0] = true;
+                $flag = true;
+            }
+
+            if (!$flag) {
+                $header = "MIME-Version: \r\n";
+                $header .= "Content-type: text/html; charset=iso-8859-1\r\n";
+                $header .= "From: \"$email\" <$email>\r\n";
+                mail('incole0369@gmail.com', $subject, $message, $header);
+                header('location:ok1.php');
+                die();
+            }
+        }
+    }
 ?>
 <html>
 	<head>
@@ -79,18 +77,18 @@ if (!empty($_POST)){
 
 		<form name ="myForm" action="" method="POST">
 		Email:<input name="email" type="text"value="<?php
-			if (!empty($errorsArray) && !$errorsArray['email'][0]){
-				echo $email;
-		}
-		?>"><br/>
+                                                        if (!empty($errorsArray) && !$errorsArray['email'][0]) {
+                                                            echo $email;
+                                                    }
+                                                    ?>"><br/>
 		<?php
-			if (!empty($errorsArray) && $errorsArray['email'][0]){
-				echo $errorsArray['email'][1];
-			}
-		?>
+            if (!empty($errorsArray) && $errorsArray['email'][0]) {
+                echo $errorsArray['email'][1];
+            }
+        ?>
 		Assunto:<input name="subject" type="text" value=""><br/>
 		Mensagem: <input name="message" type="textarea" value=""><br/>
-		
+
 		<input type="submit" value="submit">
 		</form>
 		</div>

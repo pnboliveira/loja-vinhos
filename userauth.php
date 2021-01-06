@@ -1,35 +1,32 @@
 <?php
-session_start();
+    session_start();
 
-$token = md5(session_id());
-//verificar se tem sessão iniciada
-if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION['email'])){
-	
-	$_SESSION['error'] = array ('source' => 'contato.php','type' => 'No Permissions');
-	header('Location:index.php');
-	die();
-	
-}else{
-	
+    $token = md5(session_id());
+    //verificar se tem sessão iniciada
+    if (empty($_SESSION) || !array_key_exists('email', $_SESSION) || !isset($_SESSION['email'])) {
 
-		$email = $_SESSION['email'];
-		
-		require_once('dbmanager.php');
-		$myDb = ligarDb();
-		require_once('checkType.php');
-		
-		if($result = mysqli_query($myDb,"SELECT nome, contato, morada FROM utilizadores WHERE email='$email'")){
-			while($row = mysqli_fetch_row($result)){
-				
-				$nomeUt = $row[0];
-				$contatoUt = $row[1];
-				$moradaUt = $row[2];
-			}
-		}
-	
+        $_SESSION['error'] = array('source' => 'contato.php', 'type' => 'No Permissions');
+        header('Location:index.php');
+        die();
 
-	
-}
+    } else {
+
+        $email = $_SESSION['email'];
+
+        require_once 'dbmanager.php';
+        $myDb = ligarDb();
+        require_once 'checkType.php';
+
+        if ($result = mysqli_query($myDb, "SELECT nome, contato, morada FROM utilizadores WHERE email='$email'")) {
+            while ($row = mysqli_fetch_row($result)) {
+
+                $nomeUt = $row[0];
+                $contatoUt = $row[1];
+                $moradaUt = $row[2];
+            }
+        }
+
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +38,7 @@ if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION[
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
-	
+
 </head>
 
 <body>
@@ -60,7 +57,7 @@ if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION[
   <li><a href="logout.php">Logout</a></li>
 </ul>
 <br>
-<h3> Bem vindo! <?php echo $nomeUt; ?></h3>
+<h3> Bem vindo!                <?php echo $nomeUt; ?></h3>
 
 
 </body>

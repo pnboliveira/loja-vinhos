@@ -7,6 +7,3 @@ $_SESSION = $_POST = null;
 
 header('Location: index.php');
 exit;
-
-
-?>

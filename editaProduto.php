@@ -1,46 +1,42 @@
-	<?php
-	error_reporting(E_ALL || E_NOTICE);
-session_start();
+<?php
+    error_reporting(E_ALL || E_NOTICE);
+    session_start();
 
-//verificar se tem sessão iniciada
-if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION['email'])){
-	
-	$_SESSION['error'] = array ('source' => 'contato.php','type' => 'No Permissions');
-	header('Location:index.php');
-	die();	
-}else{
-	
-	
-	require_once('dbmanager.php');
-	$myDb = ligarDb();
-	$email = $_SESSION['email'];
-	require_once('checkType.php');
-if($tipoUser != 1){header('Location:index.php');
-	die();}
-	
-		
-	
-		$id=$_GET['id'];
-		
-		if($result = mysqli_query($myDb,"SELECT * FROM vinhos WHERE id_vinho='$id'")){
-		while($row = mysqli_fetch_row($result)){
-			$idVinho=$row[0];
-			$nomeVinho=$row[1];
-			$imgvinho=$row[2];
-			$descvinho=$row[3];
-			$tipoVinho=$row[4];
-			$precovinho=$row[5];
-		}
-		}
-		
-		
-	if(isset($_POST['delete'])){
-		$query = "DELETE FROM vinhos WHERE id_vinho='$idVinho'";
-		$result = mysqli_query($myDb,$query);
-		$delete = true;
-	}
-  }
-	
+    //verificar se tem sessão iniciada
+    if (empty($_SESSION) || !array_key_exists('email', $_SESSION) || !isset($_SESSION['email'])) {
+
+        $_SESSION['error'] = array('source' => 'contato.php', 'type' => 'No Permissions');
+        header('Location:index.php');
+        die();
+    } else {
+
+        require_once 'dbmanager.php';
+        $myDb = ligarDb();
+        $email = $_SESSION['email'];
+        require_once 'checkType.php';
+        if ($tipoUser != 1) {header('Location:index.php');
+            die();}
+
+        $id = $_GET['id'];
+
+        if ($result = mysqli_query($myDb, "SELECT * FROM vinhos WHERE id_vinho='$id'")) {
+            while ($row = mysqli_fetch_row($result)) {
+                $idVinho = $row[0];
+                $nomeVinho = $row[1];
+                $imgvinho = $row[2];
+                $descvinho = $row[3];
+                $tipoVinho = $row[4];
+                $precovinho = $row[5];
+            }
+        }
+
+        if (isset($_POST['delete'])) {
+            $query = "DELETE FROM vinhos WHERE id_vinho='$idVinho'";
+            $result = mysqli_query($myDb, $query);
+            $delete = true;
+        }
+    }
+
 ?>
 <html>
 <head>
@@ -51,7 +47,7 @@ if($tipoUser != 1){header('Location:index.php');
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
-	
+
 </head>
 
 <body>
@@ -68,7 +64,7 @@ if($tipoUser != 1){header('Location:index.php');
 	}
   ?>
   <li><a href="logout.php">Logout</a></li>
-</ul>	
+</ul>
 <br><br>
 <form method="post" enctype="multipart/form-data" action ="upload.php?id=<?echo $id;?>">
    <!--Selecione uma imagem: <input name="arquivo" type="file" />

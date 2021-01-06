@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
-	
+
 </head>
 
 <body>
@@ -26,50 +26,49 @@
 
 <table>
   <?php
-  require_once('dbmanager.php');
-  $myDb=ligarDB();
-  if($result = mysqli_query($myDb,"SELECT * FROM vinhos")){
-		while($row = mysqli_fetch_row($result)){
-			$id_vinho=$row[0];
-			$nomeVinho=$row[1];
-			$imgvinho=$row[2];
-			$descvinho=$row[3];
-			$tipoVinho=$row[4];
-			$precovinho=$row[5];
-		
+      require_once 'dbmanager.php';
+      $myDb = ligarDB();
+      if ($result = mysqli_query($myDb, 'SELECT * FROM vinhos')) {
+          while ($row = mysqli_fetch_row($result)) {
+              $id_vinho = $row[0];
+              $nomeVinho = $row[1];
+              $imgvinho = $row[2];
+              $descvinho = $row[3];
+              $tipoVinho = $row[4];
+              $precovinho = $row[5];
 
-		for($i=1;$i <= sizeof($id_vinho); $i++){
-							
-							echo'<tr>';
-							echo '<th><a href="ProdutoVer.php?id='.$id_vinho.'">'.$nomeVinho. '</a></th>';
-							echo '<th><img height="300" src="'. $imgvinho.'"/></tr>';
-							echo '<th>'.$descvinho. '</th>';;
-							switch($tipoVinho){
-								   case 1:
-									$tipoVinho = 'Tinto';
-									break;
-									case 2:
-									$tipoVinho = 'Porto';
-									break;
-									case 3:
-									$tipoVinho = 'Favaios';
-									break;
-									case 4:
-									$tipoVinho = 'Verde';
-									break;
-									case 5:
-									$tipoVinho = 'Rosé';
-									break;
-								}
-							echo '<th>'.$tipoVinho. '</th>';
-							echo '<th> Preço='.$precovinho. '€</th>';
-							echo '</tr>';
-						}
-						
-				}
-				die();
-			}
-?>
+              for ($i = 1; $i <= sizeof($id_vinho); $i++) {
+
+                  echo '<tr>';
+                  echo '<th><a href="ProdutoVer.php?id=' . $id_vinho . '">' . $nomeVinho . '</a></th>';
+                  echo '<th><img height="300" src="' . $imgvinho . '"/></tr>';
+                  echo '<th>' . $descvinho . '</th>';
+                  switch ($tipoVinho) {
+                      case 1:
+                          $tipoVinho = 'Tinto';
+                          break;
+                      case 2:
+                          $tipoVinho = 'Porto';
+                          break;
+                      case 3:
+                          $tipoVinho = 'Favaios';
+                          break;
+                      case 4:
+                          $tipoVinho = 'Verde';
+                          break;
+                      case 5:
+                          $tipoVinho = 'Rosé';
+                          break;
+                  }
+                  echo '<th>' . $tipoVinho . '</th>';
+                  echo '<th> Preço=' . $precovinho . '€</th>';
+                  echo '</tr>';
+              }
+
+          }
+          die();
+      }
+  ?>
 </table>
 
 

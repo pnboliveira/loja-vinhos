@@ -1,24 +1,24 @@
 <?php
-session_start();
+    session_start();
 
-//verificar se tem sessão iniciada
-if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION['email'])){
-	
-	$_SESSION['error'] = array ('source' => 'editProduto.php','type' => 'No Permissions');
-	header('Location:login.php');
-	die();	
-	}else{
-	
-	$email = $_SESSION['email'];
-	
-	require_once('dbmanager.php');
-	$myDb = ligarDb();
-	
-	require_once('checkType.php');	
-	if($tipoUser != 1){header('Location:index.php');
-	die();}
-	
-?>
+    //verificar se tem sessão iniciada
+    if (empty($_SESSION) || !array_key_exists('email', $_SESSION) || !isset($_SESSION['email'])) {
+
+        $_SESSION['error'] = array('source' => 'editProduto.php', 'type' => 'No Permissions');
+        header('Location:login.php');
+        die();
+    } else {
+
+        $email = $_SESSION['email'];
+
+        require_once 'dbmanager.php';
+        $myDb = ligarDb();
+
+        require_once 'checkType.php';
+        if ($tipoUser != 1) {header('Location:index.php');
+            die();}
+
+    ?>
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,7 @@ if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION[
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
-	
+
 </head>
 
 <body>
@@ -44,12 +44,12 @@ if(empty($_SESSION) || !array_key_exists('email',$_SESSION) || !isset($_SESSION[
   <li><a href="contato.php">Contato</a></li>
   <li><a href="editUser.php">Editar</a></li>
   <li><a href="about.asp">Sobre</a></li>
-  <?
-	if ($tipoUser ==1){
-		echo '<li><a href="editProduto.php">Editar Produto</a></li>';
-		echo '<li class="active"><a href="uploadProduto.php">Carregar Produto Novo</a></li>';
-	}
-	}
+  <?php
+      if ($tipoUser == 1) {
+              echo '<li><a href="editProduto.php">Editar Produto</a></li>';
+              echo '<li class="active"><a href="uploadProduto.php">Carregar Produto Novo</a></li>';
+          }
+      }
   ?>
   <li><a href="logout.php">Logout</a></li>
 </ul>
